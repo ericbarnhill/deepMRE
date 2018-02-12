@@ -28,7 +28,7 @@ def get_encoder():
 	x = Conv2D(64,(3, 3), activation='relu', padding='same')(x)
 	x = Conv2D(64,(3, 3), activation='relu', padding='same')(x)
 	x = UpSampling2D((2, 2))(x)
-	decoded = Conv2D(1, (3, 3), activation='softmax', padding='same')(x)
+	decoded = Conv2D(1, (3, 3), activation='sigmoid', padding='same')(x)
 	model = Model(input_img, decoded)
 	model.compile(optimizer='adadelta', loss='binary_crossentropy')
 	return model 

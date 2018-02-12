@@ -13,10 +13,12 @@ sys.path.append('/home/realtime/project_deep/python/encoders')
 #sys.path.append('/home/realtime/project_deep/python/encoders/old')
 
 import encoder_4L_0DS
-import encoder_4L_1DS
 import encoder_8L_0DS
-import encoder_8L_1DS
-import encoder_8L_2DS
+import encoder_16L_0DS
+
+import time
+
+start = time.time()
 
 
 all_slcs = pfg.get_four_groups_slices()
@@ -35,11 +37,9 @@ all_slcs = pfg.get_four_groups_slices()
 
 
 encoders = [encoder_4L_0DS.get_encoder(),
-  encoder_4L_1DS.get_encoder(), 
   encoder_8L_0DS.get_encoder(),
-  encoder_8L_1DS.get_encoder(),
-  encoder_8L_2DS.get_encoder()]
-labels = ["E4_0", "E4_1", "E8_0", "E8_1", "E8_2"]; 
+  encoder_16L_0DS.get_encoder()]
+labels = ["E4_0", "E8_0", "E816_0"]; 
 
 predictions = {'orig':all_slcs}
 preds=[]
@@ -59,3 +59,7 @@ for enc in range(len(encoders)):
   
 sio.savemat('predictions.mat', predictions)
 
+end = time.time()
+
+print("elapsed time (hrs):")
+print((end-start)/(60*60))
