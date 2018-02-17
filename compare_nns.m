@@ -1,6 +1,6 @@
 %assemble predicted sets
 load('predictions.mat');
-models = {orig, E4_0, E4_1, E8_0, E8_1, E8_2};
+models = {orig, E4_0, E8_0, E816_0};
 n_mods = numel(models);
 
 figure(1);

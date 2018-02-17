@@ -39,7 +39,7 @@ all_slcs = pfg.get_four_groups_slices()
 encoders = [encoder_4L_0DS.get_encoder(),
   encoder_8L_0DS.get_encoder(),
   encoder_16L_0DS.get_encoder()]
-labels = ["E4_0", "E8_0", "E816_0"]; 
+labels = ["E4_0", "E8_0", "E16_0"]; 
 
 predictions = {'orig':all_slcs}
 preds=[]
