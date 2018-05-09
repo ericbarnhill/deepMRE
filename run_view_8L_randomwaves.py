@@ -22,16 +22,16 @@ from keras import backend as K
 start = time.time()
 all_slcs = pfg.get_four_groups_slices()
 
-encoders = [lre.get_lr_encoder()]
+#encoders = [lre.get_lr_encoder()]
 #  encoder_8L_0DS.get_encoder(),
 #  encoder_8L_1DS.get_encoder(),
 #  encoder_8L_2DS.get_encoder()]
-labels = ["test"]
+#labels = ["test"]
 
-#encoders = [encoder_8L_0DS.get_encoder(),
-#  encoder_8L_1DS.get_encoder(),
-#  encoder_8L_2DS.get_encoder()]
-#labels = ["E8_0", "E8_1", "E8_2"]; 
+encoders = [encoder_8L_0DS.get_encoder(),
+  encoder_8L_1DS.get_encoder(),
+  encoder_8L_2DS.get_encoder()]
+labels = ["E8_0", "E8_1", "E8_2"]; 
 
 predictions = {'orig':all_slcs}
 preds=[]
@@ -44,8 +44,8 @@ for enc in range(len(encoders)):
 	encoder = encoders[enc];
 	encoder.summary()
 	encoder.fit(all_slcs, all_slcs,
-				#epochs=50,
-				epochs=2,
+				epochs=50,
+				#epochs=2,
 				batch_size=128,
 				shuffle=True,
 				validation_split=0.3,
@@ -55,11 +55,17 @@ for enc in range(len(encoders)):
 	preds.append(encoder.predict(all_slcs))
 	predictions.update({labels[enc]:preds[enc]})
 	sio.savemat('predictions.mat', predictions)
-	actviews = []
-	for layer in encoder.layers[1:7]:
-		actviews.append(read_activations.get_activations(encoder, all_slcs[1:10,:,:], True))
-		print(type(actviews[0][0]))
-	activation_views.update({labels[enc]:actviews})
+	actviews = read_activations.get_activations(encoder, all_slcs[1:10,:,:], True))
+	acts = []
+	for i in range(len(actviews)):
+		#acts.append(np.squeeze(actviews[i][:,:,:,0]))
+		#int(len(acts))
+		lab = labels[enc] + '_' + str(i)
+		#activation_views.update({lab:acts})
+		actview = actviews[i]
+		activation_views.update({lab:actview})
+		#sio.savemat(lab + '.mat', activation_views)
+		#activation_views.update({lab:acts})
 	sio.savemat('activation_views.mat', activation_views)
 
       
